@@ -1,0 +1,15 @@
+streamlit
+numpy
+pandas
+joblib
+matplotlib
+seaborn # if used for plots
+requests
+rdkit-pypi # crucial for RDKit
+tensorflow
+scipy
+scikit-learn
+xgboost
+optuna # if needed for deployment (usually not, but if you re-train)
+# shap # if you reactivate SHAP
+Pillow # for PIL.Image
