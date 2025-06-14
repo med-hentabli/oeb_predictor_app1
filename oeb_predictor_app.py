@@ -80,9 +80,23 @@ def load_models_and_scalers():
             "cnn_input": joblib.load(get_model_path("scaler_features_cnn.pkl")),
             "cnn_output": joblib.load(get_model_path("scaler_features_cnn_output.pkl"))
         }
-        classifiers = {
-            name: joblib.load(get_model_path(f"model_{name}.pkl")) for name in MODEL_NAMES
-        }
+        #classifiers = {name: joblib.load(get_model_path(f"model_{name}.pkl")) for name in MODEL_NAMES}
+        classifiers = {}
+        for name in MODEL_NAMES:
+            model_path = get_model_path(f"model_{name}.pkl")
+            if name == "XGBoost":
+                from xgboost import XGBClassifier
+                dummy_model = XGBClassifier()  # This initializes the missing attribute
+                try:
+                    loaded_model = joblib.load(model_path)
+                    dummy_model.__dict__.update(loaded_model.__dict__)  # Copy state
+                    classifiers[name] = dummy_model
+                except Exception as e:
+                    st.error(f"Error loading XGBoost model: {e}")
+                    classifiers[name] = None
+                else:
+                    classifiers[name] = joblib.load(model_path)
+
         #cnn_model = load_model(get_model_path("cnn_feature_extractor_savedmodel"))
         imported = tf.saved_model.load(get_model_path("cnn_model_tf213_compatible"))
         cnn_model = imported.signatures["serving_default"]
