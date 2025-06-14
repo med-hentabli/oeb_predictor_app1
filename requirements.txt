@@ -1,6 +1,6 @@
 streamlit
 pandas
-numpy==1.24.4
+numpy==1.24.3
 rdkit-pypi==2022.9.5
 tensorflow==2.13.0
 scikit-learn==1.6.1
