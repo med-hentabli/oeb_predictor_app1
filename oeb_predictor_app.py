@@ -302,22 +302,16 @@ def main():
                             if hasattr(model, "predict_proba"):
                                 probs = model.predict_proba(features)[0]
                             else:
-                                raise AttributeError("Model does not support predict_proba.")
+                                raise AttributeError("No predict_proba method.")
                         except Exception as e:
-                            st.warning(f"predict_proba failed: {e}. Trying softmax fallback.")
+                            st.warning(f"predict_proba failed: {e}. Using one-hot fallback.")
                             try:
-                                preds = model.predict(features)
-                                n_classes = len(OEB_DESCRIPTIONS)
-                                probs = np.zeros(n_classes)
-                                if isinstance(preds, np.ndarray):
-                                    pred_class = int(preds[0]) if preds.ndim > 0 else int(preds)
-                                    probs[pred_class] = 1.0
-                                else:
-                                    probs[int(preds)] = 1.0
+                                pred = model.predict(features)
+                                probs = np.zeros(len(OEB_DESCRIPTIONS))
+                                probs[int(pred[0])] = 1.0  # One-hot
                             except Exception as e2:
-                                st.error(f"All prediction methods failed: {e2}")
-                                probs = np.full(len(OEB_DESCRIPTIONS), 1 / len(OEB_DESCRIPTIONS)) 
-
+                                st.error(f"All fallback prediction methods failed: {e2}")
+                                probs = np.full(len(OEB_DESCRIPTIONS), 1 / len(OEB_DESCRIPTIONS))  # Uniform fallback                      
                     else: 
                         decision_scores = model.decision_function(features)
                         st.info("Model does not have `predict_proba`. Using `decision_function` with softmax.")
