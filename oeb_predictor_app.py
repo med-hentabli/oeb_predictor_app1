@@ -161,9 +161,9 @@ def compute_cnn_ready_features(smiles, scalers, cnn_model):
     if cnn_model is None:
         st.error("CNN model not loaded. Cannot extract features.")
         return None
-    cnn_features_raw = cnn_model.predict(norm_input_reshaped)
+    #cnn_features_raw = cnn_model.predict(norm_input_reshaped)
     output_dict = cnn_model(input_layer_1=tf.convert_to_tensor(norm_input_reshaped, dtype=tf.float32))
-    #cnn_features_raw = list(output_dict.values())[0].numpy()
+    cnn_features_raw = list(output_dict.values())[0].numpy()
 
     
     try:
