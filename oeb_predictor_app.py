@@ -297,19 +297,26 @@ def main():
                     model = classifiers[selected_model_name]
                     
                     if hasattr(model, "predict_proba"):
-                        #probs = model.predict_proba(features)[0]
+                        probs = model.predict_proba(features)[0]
                         try:
-                            probs = model.predict_proba(features)[0]
+                            if hasattr(model, "predict_proba"):
+                                probs = model.predict_proba(features)[0]
+                            else:
+                                raise AttributeError("Model does not support predict_proba.")
                         except Exception as e:
-                            st.warning(f"predict_proba failed: {e}. Using softmax fallback.")
+                            st.warning(f"predict_proba failed: {e}. Trying softmax fallback.")
                             try:
-                                decision_scores = model.decision_function(features)
-                                if decision_scores.ndim == 1:
-                                    decision_scores = decision_scores.reshape(1, -1)
-                                    probs = softmax(decision_scores, axis=1)[0]
-                            except Exception as e:
-                                st.warning(f"Softmax fallback failed: {e}")
-                                probs = np.full(len(OEB_DESCRIPTIONS), 1 / len(OEB_DESCRIPTIONS))
+                                preds = model.predict(features)
+                                n_classes = len(OEB_DESCRIPTIONS)
+                                probs = np.zeros(n_classes)
+                                if isinstance(preds, np.ndarray):
+                                    pred_class = int(preds[0]) if preds.ndim > 0 else int(preds)
+                                    probs[pred_class] = 1.0
+                                else:
+                                    probs[int(preds)] = 1.0
+                            except Exception as e2:
+                                st.error(f"All prediction methods failed: {e2}")
+                                probs = np.full(len(OEB_DESCRIPTIONS), 1 / len(OEB_DESCRIPTIONS)) 
 
                     else: 
                         decision_scores = model.decision_function(features)
