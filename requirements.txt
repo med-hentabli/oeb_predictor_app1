@@ -1,7 +1,7 @@
 streamlit
 pandas
 numpy
-rdkit==2022.9.5
+rdkit-pypi==2022.9.5
 tensorflow
 scikit-learn
 xgboost
