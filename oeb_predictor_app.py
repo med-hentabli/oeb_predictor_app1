@@ -82,9 +82,9 @@ def load_models_and_scalers():
         classifiers = {
             name: joblib.load(get_model_path(f"model_{name}.pkl")) for name in MODEL_NAMES
         }
-        #cnn_model = load_model(get_model_path("cnn_feature_extractor_savedmodel"))
+        cnn_model = load_model(get_model_path("cnn_feature_extractor_savedmodel"))
         #cnn_model = TFSMLayer(get_model_path("cnn_feature_extractor_savedmodel"), call_endpoint="serving_default")
-        cnn_model = load_model(get_model_path("cnn_feature_extractor_model.keras"), compile=False)
+        #cnn_model = load_model(get_model_path("cnn_feature_extractor_model.keras"), compile=False)
     except FileNotFoundError as e:
         st.error(f"Error loading model files: {e}. Please ensure all model files are in the '{MODEL_DIR}' subdirectory.")
         return None, {}, {} # Return empty structures on error
