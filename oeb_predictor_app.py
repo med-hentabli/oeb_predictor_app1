@@ -22,7 +22,7 @@ from scipy.special import softmax
 from PIL import Image
 import io
 import os # Added for path joining
-
+#from keras.layers import TFSMLayer
 # --- PAGE CONFIG ---
 st.set_page_config(page_title="OEB Prediction Pro", layout="wide", page_icon="🔬")
 
@@ -55,7 +55,7 @@ DEFAULT_SMILES = "CC(=O)Oc1ccccc1C(=O)O" # Aspirin
 # IMPORTANT: Create a subdirectory named 'models' in the same directory as your script,
 # and place all your .pkl and .h5 files there.
 MODEL_DIR ="models" 
-from keras.layers import TFSMLayer
+
 
 
 
@@ -83,7 +83,8 @@ def load_models_and_scalers():
             name: joblib.load(get_model_path(f"model_{name}.pkl")) for name in MODEL_NAMES
         }
         #cnn_model = load_model(get_model_path("cnn_feature_extractor_savedmodel"))
-        cnn_model = TFSMLayer(get_model_path("cnn_feature_extractor_savedmodel"), call_endpoint="serving_default")
+        #cnn_model = TFSMLayer(get_model_path("cnn_feature_extractor_savedmodel"), call_endpoint="serving_default")
+        cnn_model = load_model(get_model_path("cnn_feature_extractor_model.keras"), compile=False)
     except FileNotFoundError as e:
         st.error(f"Error loading model files: {e}. Please ensure all model files are in the '{MODEL_DIR}' subdirectory.")
         return None, {}, {} # Return empty structures on error
