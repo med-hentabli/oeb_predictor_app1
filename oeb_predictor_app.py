@@ -15,7 +15,7 @@ import matplotlib.pyplot as plt
 from urllib.parse import quote
 import requests
 from rdkit import Chem, DataStructs
-from rdkit.Chem import Descriptors, AllChem, Draw
+from rdkit.Chem import Descriptors, AllChem
 from tensorflow.keras.models import load_model
 from rdkit.ML.Descriptors.MoleculeDescriptors import MolecularDescriptorCalculator
 from scipy.special import softmax
@@ -205,8 +205,8 @@ def smiles_to_image(smiles, mol_size=(300,300)):
     if mol is None:
         return None
     try:
-        img = Draw.MolToImage(mol, size=mol_size)
-        return img
+        #img = Draw.MolToImage(mol, size=mol_size)
+        return None
     except Exception as e:
         st.error(f"Could not generate molecule image: {e}")
         return None
