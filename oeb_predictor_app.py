@@ -297,7 +297,7 @@ def main():
                     model = classifiers[selected_model_name]
                     
                     if hasattr(model, "predict_proba"):
-                        probs = model.predict_proba(features)[0]
+                        #probs = model.predict_proba(features)[0]
                         try:
                             if hasattr(model, "predict_proba"):
                                 probs = model.predict_proba(features)[0]
