@@ -83,7 +83,7 @@ def load_models_and_scalers():
         classifiers = {name: joblib.load(get_model_path(f"model_{name}.pkl")) for name in MODEL_NAMES}
         
         #cnn_model = load_model(get_model_path("cnn_feature_extractor_savedmodel"))
-        imported = tf.saved_model.load(get_model_path("cnn_model_tf213_compatiblev2))
+        imported = tf.saved_model.load(get_model_path("cnn_model_tf213_compatiblev2"))
         cnn_model = imported.signatures["serving_default"]
         #cnn_model = TFSMLayer(get_model_path("cnn_feature_extractor_savedmodel"), call_endpoint="serving_default")
     
