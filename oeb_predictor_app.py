@@ -22,6 +22,7 @@ from scipy.special import softmax
 from PIL import Image
 import io
 import os # Added for path joining
+import tensorflow as tf
 #from keras.layers import TFSMLayer
 # --- PAGE CONFIG ---
 st.set_page_config(page_title="OEB Prediction Pro", layout="wide", page_icon="🔬")
