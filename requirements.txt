@@ -2,7 +2,7 @@ streamlit
 pandas
 numpy==1.24.3
 rdkit-pypi==2022.9.5
-tensorflow==2.13.0
+tensorflow==2.15.0
 scikit-learn==1.6.1
 xgboost==1.7.6
 matplotlib
