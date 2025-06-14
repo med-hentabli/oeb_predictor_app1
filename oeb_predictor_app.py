@@ -54,7 +54,7 @@ DEFAULT_SMILES = "CC(=O)Oc1ccccc1C(=O)O" # Aspirin
 # --- HELPER FOR PATHS ---
 # IMPORTANT: Create a subdirectory named 'models' in the same directory as your script,
 # and place all your .pkl and .h5 files there.
-MODEL_DIR = "models" 
+MODEL_DIR ="main"# "models" 
 
 def get_model_path(filename):
     """Constructs an absolute path to the model file."""
